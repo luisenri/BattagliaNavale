@@ -23,7 +23,10 @@ public class Griglia {
 	}*/
 	public StatoBarche inserisciNave(int riga, int colonna) {
 		StatoBarche st = null;
-		st = stato[riga][colonna] = StatoBarche.BARCA;
+		if(stato[riga][colonna] == StatoBarche.NESSUNO){
+			stato[riga][colonna] = StatoBarche.BARCA;
+			st = stato[riga][colonna];
+		}
 		return st;
 	}
 

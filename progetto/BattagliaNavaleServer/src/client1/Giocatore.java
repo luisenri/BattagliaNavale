@@ -10,9 +10,9 @@ public class Giocatore {
 	private Griglia griglia;
 	private StatoClient statoClient;
 	
-	private int navi = 9;
-	private static int naviColpiteDaAvversario = 0;
-	private static int naviInserite = 0;
+	//private int navi = 9;
+	private int naviColpiteDaAvversario = 0;
+	private int naviInserite = 0;
 	
 	
 	public Giocatore(String nome) {
@@ -85,6 +85,10 @@ public class Giocatore {
 
 	public boolean resetNavi() {
 		return griglia.reset();
+	}
+	
+	public int getNaviInserite(){
+		return this.naviInserite;
 	}
 	
 	/*public void inserisciNaviRandom(){

@@ -7,6 +7,7 @@ import java.util.List;
 public class Gioco {
 
 	private static final int MAX_GIOCATORI = 2;
+	private static final int MAX_NAVI = 10;
 	private static int numeroGiocatori = 0;
 	private List<Giocatore> giocatori;
 	private static int turno = 0;
@@ -62,17 +63,26 @@ public class Gioco {
 	 */
 	public StatoBarche attacco(String nomeGiocatore, int riga, int colonna) {
 		StatoBarche stato = null;
-		int idAttaccante = idGiocatore(nomeGiocatore);
-		int turnoAttuale = turno%2;
-		if(idAttaccante == turnoAttuale){//entra solo s'e' il proprio turno
-			int idAvversario = turnoAttuale == 0 ? 1 : 0;
-			stato = giocatori.get(turnoAttuale).attaccaAvversario(giocatori.get(idAvversario), riga, colonna);
-			turno++;
-			stampaGriglie();
+		if(numeroGiocatori<=1){
+			stato = StatoBarche.MANCA_AVVERSARIO;
 			return stato;
-		}else
-			System.out.println("Turno del giocatore "+turno%2+" non e' il tuo turno");
-
+		}else{
+			int idAttaccante = idGiocatore(nomeGiocatore);
+			int idAvversario = idAttaccante == 0 ? 1 : 0;
+			int turnoAttuale = turno%2;
+			if(giocatori.get(idAvversario).getNaviInserite() <= MAX_NAVI){
+				stato = StatoBarche.BARCA_NON_POSIZIONATA;
+				return stato;
+			}else
+				if(idAttaccante == turnoAttuale){//entra solo s'e' il proprio turno
+					//int idAvversario = turnoAttuale == 0 ? 1 : 0;
+					stato = giocatori.get(turnoAttuale).attaccaAvversario(giocatori.get(idAvversario), riga, colonna);
+					turno++;
+					stampaGriglie();
+					return stato;
+				}else
+					System.out.println("Turno del giocatore "+turno%2+" non e' il tuo turno");
+		}
 		return stato;
 	}
 
@@ -122,12 +132,13 @@ public class Gioco {
 	}
 
 	public boolean resetNavi(String nomeGiocatore) {
-		boolean risp = false;
-		for(Giocatore giocatore: giocatori){
+		boolean risp = true;
+		giocatori.clear();//elimina tutti gli elementi
+		/*for(Giocatore giocatore: giocatori){
 			if(giocatore.getNome().equalsIgnoreCase(nomeGiocatore)){
 				risp = giocatore.resetNavi();
 			}
-		}
+		}*/
 		return risp;
 	}
 
