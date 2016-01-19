@@ -42,10 +42,8 @@ public class MetodiServerImpl extends UnicastRemoteObject implements MetodiServe
 	}
 
 	@Override
-	public String saluta() throws RemoteException {
-		String saluto = "Ciao";
-		System.out.println(saluto + " dal Server.");
-		return "Server ti saluta "+saluto;
+	public String getNomeAvversario(String nomeGiocatore) throws RemoteException {
+		return gioco.nomeAvversario(nomeGiocatore);
 	}
 
 	@Override

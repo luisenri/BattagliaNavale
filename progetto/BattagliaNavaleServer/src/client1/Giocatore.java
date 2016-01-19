@@ -35,6 +35,10 @@ public class Giocatore {
 		}
 	}
 	
+	public StatoClient getStatoClient(){
+		return this.statoClient;
+	}
+
 	public String getNome(){
 		return nome;
 	}

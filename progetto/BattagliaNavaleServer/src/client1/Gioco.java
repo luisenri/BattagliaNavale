@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gioco {
-		
+
 	private static final int MAX_GIOCATORI = 2;
 	private static int numeroGiocatori = 0;
 	private List<Giocatore> giocatori;
 	private static int turno = 0;
 
-	public Gioco() throws RemoteException{
+	public Gioco() throws RemoteException {
 		this.giocatori = new ArrayList<Giocatore>();
 	}
-	
+
 	/***
 	 * Registra un giocatore
 	 * 
@@ -27,22 +27,22 @@ public class Gioco {
 			risp = giocatori.add(new Giocatore(nomeGiocatore,id,url));
 			if(risp)
 				System.out.println("Giocatore "+nomeGiocatore+" registrato");
-		}
-		else
+		}else
 			System.out.println("Raggiunto il limite massimo dei giocatori.");
 		return risp;
 	}
-	
+
 	public List<Giocatore> getGiocatori(){
 		return giocatori;
 	}
 
 	/**
-	 * inserisce la nave seconto del giocatore passato come parametro e nelle posizioni indicate
+	 * inserisce la nave seconto del giocatore passato come parametro e nelle
+	 * posizioni indicate
 	 */
-	public StatoBarche inserisciNave(String nomeGiocatore, int riga, int colonna) throws RemoteException {
+	public StatoBarche inserisciNave(String nomeGiocatore, int riga, int colonna)throws RemoteException {
 		StatoBarche stato = null;
-		
+
 		for(Giocatore giocatore: giocatori){
 			if(giocatore.getNome().equals(nomeGiocatore)){
 				stato = giocatore.inserisciNave(riga, colonna);
@@ -52,13 +52,13 @@ public class Gioco {
 		}
 		return stato;
 	}
-	
+
 	/***
 	 * attacca l'avversario
 	 * @param idAttaccante id di chi attacca
-	 * @param riga 
+	 * @param riga
 	 * @param colonna
-	 * @return restituisce la cella con lo stato ACQUA o BARCA_COLPITA 
+	 * @return restituisce la cella con lo stato ACQUA o BARCA_COLPITA
 	 */
 	public StatoBarche attacco(String nomeGiocatore, int riga, int colonna) {
 		StatoBarche stato = null;
@@ -72,51 +72,52 @@ public class Gioco {
 			return stato;
 		}else
 			System.out.println("Turno del giocatore "+turno%2+" non e' il tuo turno");
-		
+
 		return stato;
 	}
-	
-	private int idGiocatore(String nomeGiocatore){
+
+	private int idGiocatore(String nomeGiocatore) {
 		int idGiocatore = -1;
-		for(Giocatore giocatore: giocatori){
-			if(giocatore.getNome().equalsIgnoreCase(nomeGiocatore))
+		for (Giocatore giocatore : giocatori) {
+			if (giocatore.getNome().equalsIgnoreCase(nomeGiocatore))
 				return giocatore.getIdGiocatore();
 		}
 		return idGiocatore;
 	}
 
 	/**
-	 * da modificare: deve confrontare le navi colpite quando finiscono i colpi a disposizione
+	 * da modificare: deve confrontare le navi colpite quando finiscono i colpi
+	 * a disposizione
 	 */
 	public String msgVincitore() {
 		String msg = "";
-//		int idVincitore = -1;
-//		
-//		if(giocatori.get(0).getColpiRimasti()<= 0 && giocatori.get(1).getColpiRimasti() <= 0){
-//			idVincitore = giocatori.get(0).getNaviColpiteDaAvversario() > giocatori.get(1).getNaviColpiteDaAvversario()? 0 : 1;
-//			msg = "vincitore Giocatore "+giocatori.get(idVincitore).getNome()+" Navi colpite = "+giocatori.get(idVincitore).getNaviColpiteDaAvversario();
-//		}
+		// int idVincitore = -1;
+		//
+		// if(giocatori.get(0).getColpiRimasti()<= 0 &&
+		// giocatori.get(1).getColpiRimasti() <= 0){
+		// idVincitore = giocatori.get(0).getNaviColpiteDaAvversario() >
+		// giocatori.get(1).getNaviColpiteDaAvversario()? 0 : 1;
+		// msg =
+		// "vincitore Giocatore "+giocatori.get(idVincitore).getNome()+" Navi colpite = "+giocatori.get(idVincitore).getNaviColpiteDaAvversario();
+		// }
 		return msg;
 	}
-	
+
 	/***
 	 * inserisce navi di un giocatore
-	 
-	public void inserisciNaviRandom(String nomeGiocatore){
-		for(Giocatore giocatore: giocatori){
-			if(giocatore.getNome().equalsIgnoreCase(nomeGiocatore)){
-				giocatore.inserisciNaviRandom();
-			}
-		}
-		stampaGriglie();
-	}*/
-	
+	 * 
+	 * public void inserisciNaviRandom(String nomeGiocatore){ for(Giocatore
+	 * giocatore: giocatori){
+	 * if(giocatore.getNome().equalsIgnoreCase(nomeGiocatore)){
+	 * giocatore.inserisciNaviRandom(); } } stampaGriglie(); }
+	 */
+
 	/***
 	 * stampa le griglie
 	 */
 	public void stampaGriglie(){
 		for(Giocatore giocatore : giocatori){
-			System.out.println(giocatore.getNome()+" "+giocatore.getIdGiocatore()+"\n"+giocatore.getGriglia().stampaGriglia());	
+			System.out.println(giocatore.getNome()+" "+giocatore.getIdGiocatore()+"\n"+giocatore.getGriglia().stampaGriglia());
 		}
 	}
 
@@ -128,5 +129,15 @@ public class Gioco {
 			}
 		}
 		return risp;
+	}
+
+	public String nomeAvversario(String nomeGiocatore) {
+		String nome = null;
+		if (numeroGiocatori > 1) {
+			int idgiocatore = idGiocatore(nomeGiocatore);
+			int idAvversario = idgiocatore == 0 ? 1 : 0;
+			nome = giocatori.get(idAvversario).getNome();
+		}
+		return nome;
 	}
 }

@@ -17,5 +17,5 @@ public interface MetodiServer extends Remote{
 	
 	public boolean reset(String nomeGiocatore) throws RemoteException;
 	
-	public String saluta() throws RemoteException;
+	public String getNomeAvversario(String nomeGiocatore) throws RemoteException;
 }
