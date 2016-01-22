@@ -8,4 +8,6 @@ public interface StatoClient extends Remote{
 	public void invioAggiornamentoAttacco(int riga,int colonna,StatoBarche stato) throws RemoteException;
 	public void invioMsg(int naviRimaste,String messaggio) throws RemoteException;
 	public void invioNomeAvversario(String nome) throws RemoteException;
+	public void invioAggiornamentoNaviAffondate(int naviAff)throws RemoteException;
+	public void invioAggiornamentoNaviSalve(int naviSalve)throws RemoteException;
 }

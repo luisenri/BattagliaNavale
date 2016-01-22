@@ -62,8 +62,20 @@ public class Gioco {
 	 * @return restituisce la cella con lo stato ACQUA o BARCA_COLPITA
 	 */
 	public StatoBarche attacco(String nomeGiocatore, int riga, int colonna) {
-		StatoBarche stato = null;
-		if(numeroGiocatori<=1){
+        StatoBarche stato = null;
+        int idAttaccante = idGiocatore(nomeGiocatore);
+        int turnoAttuale = turno % 2;
+        if (idAttaccante == turnoAttuale) {//entra solo s'e' il proprio turno
+            int idAvversario = turnoAttuale == 0 ? 1 : 0;
+            stato = giocatori.get(turnoAttuale).attaccaAvversario(giocatori.get(idAvversario), riga, colonna);
+            turno++;
+            stampaGriglie();
+            return stato;
+        } else {
+            System.out.println("Turno del giocatore " + turno % 2 + " non e' il tuo turno");
+        }
+		
+		/*if(numeroGiocatori<=1){
 			stato = StatoBarche.MANCA_AVVERSARIO;
 			return stato;
 		}else{
@@ -82,7 +94,7 @@ public class Gioco {
 					return stato;
 				}else
 					System.out.println("Turno del giocatore "+turno%2+" non e' il tuo turno");
-		}
+		}*/
 		return stato;
 	}
 
@@ -134,6 +146,9 @@ public class Gioco {
 	public boolean resetNavi(String nomeGiocatore) {
 		boolean risp = true;
 		giocatori.clear();//elimina tutti gli elementi
+		numeroGiocatori = 0;
+		turno = 0;
+		
 		/*for(Giocatore giocatore: giocatori){
 			if(giocatore.getNome().equalsIgnoreCase(nomeGiocatore)){
 				risp = giocatore.resetNavi();

@@ -10,7 +10,6 @@ public class Giocatore {
 	private Griglia griglia;
 	private StatoClient statoClient;
 	
-	//private int navi = 9;
 	private int naviColpiteDaAvversario = 0;
 	private int naviInserite = 0;
 	
@@ -71,11 +70,13 @@ public class Giocatore {
 		if( stato != null ){
 			if( stato == StatoBarche.BARCA_COLPITA){ 
 				naviColpiteDaAvversario++;
-				naviRimaste = naviInserite - naviColpiteDaAvversario;
 			}
+			naviRimaste = naviInserite - naviColpiteDaAvversario;
 			try {
 				avversario.statoClient.invioAggiornamentoAttacco(riga,colonna,stato);
 				avversario.statoClient.invioMsg(naviRimaste,"Nave Colpita");
+				avversario.statoClient.invioAggiornamentoNaviAffondate(naviColpiteDaAvversario);
+                avversario.statoClient.invioAggiornamentoNaviSalve(naviRimaste);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
