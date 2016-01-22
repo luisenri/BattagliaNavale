@@ -7,8 +7,6 @@ import java.util.List;
 public class Gioco {
 
 	private static final int MAX_GIOCATORI = 2;
-	//private static final int MAX_NAVI = 10;
-	//private static final boolean Giocatore = false;
 	private static int numeroGiocatori = 0;
 	private List<Giocatore> giocatori;
 	private static int turno = 0;
@@ -136,10 +134,10 @@ public class Gioco {
 		String vincitore = null;
 		
 		if (giocatore1.getNaviColpiteDaAvversario() >= 10) {
-			vincitore = giocatore2.getNome();
+			vincitore = giocatore1.getNome();
 		}else 
 			if(giocatore2.getNaviColpiteDaAvversario() >= 10){
-				vincitore = giocatore1.getNome();
+				vincitore = giocatore2.getNome();
 			}
 		
 		if(vincitore!= null){
