@@ -7,7 +7,8 @@ import java.util.List;
 public class Gioco {
 
 	private static final int MAX_GIOCATORI = 2;
-	private static final int MAX_NAVI = 10;
+	//private static final int MAX_NAVI = 10;
+	//private static final boolean Giocatore = false;
 	private static int numeroGiocatori = 0;
 	private List<Giocatore> giocatori;
 	private static int turno = 0;
@@ -70,6 +71,7 @@ public class Gioco {
             stato = giocatori.get(turnoAttuale).attaccaAvversario(giocatori.get(idAvversario), riga, colonna);
             turno++;
             stampaGriglie();
+            invioVincitore();//invio messaggio di chi ha vinto
             return stato;
         } else {
             System.out.println("Turno del giocatore " + turno % 2 + " non e' il tuo turno");
@@ -122,7 +124,38 @@ public class Gioco {
 		// msg =
 		// "vincitore Giocatore "+giocatori.get(idVincitore).getNome()+" Navi colpite = "+giocatori.get(idVincitore).getNaviColpiteDaAvversario();
 		// }
+		
+		
 		return msg;
+	}
+	
+	public void invioVincitore(){
+		Giocatore giocatore1 = giocatori.get(0);
+		Giocatore giocatore2 = giocatori.get(1);
+
+		String vincitore = null;
+		
+		if (giocatore1.getNaviColpiteDaAvversario() >= 10) {
+			vincitore = giocatore2.getNome();
+		}else 
+			if(giocatore2.getNaviColpiteDaAvversario() >= 10){
+				vincitore = giocatore1.getNome();
+			}
+		
+		if(vincitore!= null){
+			String risp = "Il vincitore e' "+vincitore;
+			
+			for(Giocatore giocatore : giocatori){
+				try {
+					giocatore.getStatoClient().invioMsgVincitore(risp);
+					//giocatore2.getStatoClient().invioMsgVincitore(risp);
+					System.out.print(risp);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
 	}
 
 	/***

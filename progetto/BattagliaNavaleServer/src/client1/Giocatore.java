@@ -74,7 +74,7 @@ public class Giocatore {
 			naviRimaste = naviInserite - naviColpiteDaAvversario;
 			try {
 				avversario.statoClient.invioAggiornamentoAttacco(riga,colonna,stato);
-				avversario.statoClient.invioMsg(naviRimaste,"Nave Colpita");
+//				avversario.statoClient.invioMsg(naviRimaste,"Nave Colpita");
 				avversario.statoClient.invioAggiornamentoNaviAffondate(naviColpiteDaAvversario);
                 avversario.statoClient.invioAggiornamentoNaviSalve(naviRimaste);
 			} catch (RemoteException e) {
